@@ -5,11 +5,17 @@ const Quiz: React.FC = () => {
   const [questions, setQuestions] = useState<any[]>([]);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
   const [score, setScore] = useState<number | null>(null);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      const quizQuestions = await getQuizQuestions();
-      setQuestions(quizQuestions);
+      const response = await getQuizQuestions();
+      if (response.error) {
+        setQuestions([]);
+        setError(response.error);
+        return;
+      }
+      setQuestions(response);
     };
 
     fetchQuestions();
@@ -56,12 +62,15 @@ const Quiz: React.FC = () => {
           </div>
         ))}
       </div>
-      <button
-        onClick={calculateScore}
-        className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-      >
-        Submit Quiz
-      </button>
+      {questions.length > 0 && (
+        <button
+          onClick={calculateScore}
+          className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+        >
+          Submit Quiz
+        </button>
+      )}
+      {error && <span className="text-2xl text-red-500">{error}</span>}
       {score !== null && (
         <div className="mt-4">
           <h2 className="text-2xl font-bold">

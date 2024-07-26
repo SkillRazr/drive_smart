@@ -2,6 +2,12 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8081";
 
+type Contact = {
+  name: string;
+  email: string;
+  details: string;
+};
+
 const quizMockData = [
   {
     question: "What should you do when you see a red traffic light?",
@@ -46,13 +52,22 @@ export const getQuizQuestions = async () => {
     console.log("resp", response);
     return response.data.data;
   } catch (e) {
-    return quizMockData;
+    return { data: [], error: "Api failure, please try again later" };
   }
 };
 
 export const getVideos = async () => {
   try {
     const response = await axios.get(`${API_URL}/video/getVideos`);
+    return response.data.data;
+  } catch (e) {
+    return videoMockData;
+  }
+};
+
+export const saveContacts = async (payload: Contact) => {
+  try {
+    const response = await axios.post(`${API_URL}/saveContact`, payload);
     return response.data.data;
   } catch (e) {
     return videoMockData;
