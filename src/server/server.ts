@@ -5,6 +5,7 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 
 import quizApis from "./routes/quizApiRoutes";
 import videoApis from "./routes/videoApiRoute";
+import authApis from "./routes/auth";
 import { quizzes } from "./data/quiz_data";
 import "dotenv/config";
 
@@ -18,6 +19,9 @@ app.use(cors());
 // routes middleware
 app.use("/quiz", quizApis);
 app.use("/video", videoApis);
+app.use("/auth", authApis);
+
+console.log("serverr", process.env.MONGODB_URI);
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.MONGODB_URI!, {
