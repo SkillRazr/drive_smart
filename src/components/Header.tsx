@@ -7,6 +7,9 @@ const Header: React.FC = () => {
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-xl font-bold">Road Safety Awareness</h1>
         <nav>
+          <a href="/login" className="mx-2">
+            Login
+          </a>
           <a href="#tips" className="mx-2">
             Tips
           </a>
